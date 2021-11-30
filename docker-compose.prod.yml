@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.prod
+    image: backend:latest
+    container_name: medusa-server
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
+      NODE_ENV: production
+      STORE_CORS: http://localhost
+    ports:
+      - "9000:9000"
+
+  postgres:
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: medusa-docker
+
+  redis:
+    restart: always
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.prod
+    image: admin:latest
+    restart: always
+    depends_on:
+      - backend
+    container_name: medusa-admin
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: --openssl-legacy-provider
+    ports:
+      - "7000:80"
+
+  storefront:
+    build:
+      dockerfile: Dockerfile.prod
+    image: storefront:latest
+    container_name: medusa-storefront
+    restart: always
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
