@@ -10,7 +10,7 @@ RUN apt-get install -y python
 
 RUN npm install -g npm@latest
 
-RUN npm install -g @medusajs/medusa-cli
+RUN npm install -g @medusajs/medusa-cli@latest
 
 RUN npm install --loglevel=error
 
