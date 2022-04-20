@@ -48,9 +48,17 @@ The files for both the <i>Medusa server</i> and the <i>Storefront</i> are loaded
 
 ---
 
-## Setting up your Medusa
+## Requirements
 
-To set up Medusa in a development environment with Docker you should initially build the images since they are not published on dockerhub. This is accomplished by adding the `--build` flag as shown below:
+To use Docker with Medusa, you should have created a Medusa project. Check out our [Quickstart](https://github.com/medusajs/medusa#quickstart) to get started. 
+
+Additionally, you should have `docker` and `docker-compose` installed on your system.
+
+## Getting Started
+
+To set up Medusa in a development environment with Docker, you should copy files `docker-compose.yml`, `docker-compose.override.yml, `backend/develop.sh`, and `backend/Dockerfile` to your Medusa project.
+
+Then build the images since they are not published on dockerhub. This is accomplished by adding the `--build` flag as shown below:
 
 ```bash
 docker compose up --build
