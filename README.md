@@ -1,24 +1,24 @@
 <p align="center">
-  <a href="https://www.medusa-commerce.com">
-    <img alt="Medusa" src="https://user-images.githubusercontent.com/7554214/129161578-19b83dc8-fac5-4520-bd48-53cba676edd2.png" width="100" />
+  <a href="https://www.medusajs.com">
+    <img alt="Medusa" src="https://user-images.githubusercontent.com/7554214/153162406-bf8fd16f-aa98-4604-b87b-e13ab4baf604.png" width="100" />
   </a>
 </p>
 <h1 align="center">
-  Docker Medusa
+  Medusa
 </h1>
+
+<h4 align="center">
+  <a href="https://github.com/medusajs/admin">Medusa Admin</a> |
+  <a href="https://www.medusajs.com">Website</a> |
+  <a href="https://www.medusajs.com/blog">Blog</a> |
+  <a href="https://www.linkedin.com/company/medusa-commerce">LinkedIn</a> |
+  <a href="https://twitter.com/medusajs">Twitter</a> |
+  <a href="https://docs.medusajs.com">Documentation</a> |
+  <a href="https://medusajs.notion.site/medusajs/Medusa-Home-3485f8605d834a07949b17d1a9f7eafd">Notion</a>
+</h4>
+
 <p align="center">
-This repo provides the basis for you to get started with a complete <a href="https://github.com/medusajs/medusa">Medusa</a> setup using docker compose. The complete setup includes: 
-<ul>
-  <li><b>`/backend`</b>: Your Medusa instance, located in the <i>backend</i> folder</li>
-  <li><b>`/admin`</b>: Medusa Admin where you control all aspects of your store</li>
-  <li><b>`/storefront`</b>: Storefront for your customers to shop</li>
-</ul>
-
-**This project is inteded for development only at this time.**
-
-The files for both the <i>Medusa server</i> and the <i>Storefront</i> are loaded in Bind Mounts allowing you to change the server functionality and have the change be hot-reloaded onto your running containers.
-
- <!-- Follow the steps below to get ready. -->
+Medusa is an open-source headless commerce engine that enables developers to create amazing digital commerce experiences.
 </p>
 <p align="center">
   <a href="https://github.com/medusajs/medusa/blob/master/LICENSE">
@@ -27,12 +27,23 @@ The files for both the <i>Medusa server</i> and the <i>Storefront</i> are loaded
   <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
   </a>
+    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
   <a href="https://discord.gg/xpCwq3Kfn8">
     <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=medusajs">
     <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
   </a>
+</p>
+
+
+## Please note 
+This repo is managed by the Medusa Community. Medusa does not provide official support for Docker, but we will accept fixes and documentation. Use at your own risk.
+
+**This project is inteded for development only at this time.**
+
+The files for both the <i>Medusa server</i> and the <i>Storefront</i> are loaded in Bind Mounts allowing you to change the server functionality and have the change be hot-reloaded onto your running containers.
+
 </p>
 
 ---
