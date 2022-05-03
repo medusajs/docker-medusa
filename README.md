@@ -56,7 +56,7 @@ Additionally, you should have `docker` and `docker-compose` installed on your sy
 
 ## Getting Started
 
-To set up Medusa in a development environment with Docker, you should copy files `docker-compose.yml`, `docker-compose.override.yml, `backend/develop.sh`, and `backend/Dockerfile` to your Medusa project.
+To set up Medusa in a development environment with Docker, you should copy files `docker-compose.yml`, `docker-compose.override.yml`, `backend/develop.sh`, and `backend/Dockerfile` to your Medusa project.
 
 Then build the images since they are not published on dockerhub. This is accomplished by adding the `--build` flag as shown below:
 
