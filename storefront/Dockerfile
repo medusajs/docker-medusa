@@ -26,6 +26,8 @@ FROM base as builder
 
 ENV NODE_ENV=production
 
+RUN npm run build
+
 RUN npm install --production
 
 
