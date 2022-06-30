@@ -1,4 +1,4 @@
-FROM node:17.1.0 as base
+FROM node:17.1.0 as deps
 
 WORKDIR /app/medusa
 
@@ -12,7 +12,7 @@ RUN npm install
 
 # ===== DEVELOPMENT STAGE =====
 
-FROM base as dev
+FROM deps as dev
 
 ENV NODE_ENV=development
 
@@ -20,7 +20,7 @@ ENTRYPOINT ["./develop.sh", "develop"]
 
 # ===== PRODUCTION BUILDER STAGE =====
 
-FROM base as builder
+FROM deps as builder
 
 ENV NODE_ENV=production
 
@@ -28,7 +28,7 @@ RUN npm run build
 
 # ===== PRODUCTION RUNNER STAGE =====
 
-FROM node:17.1.0-alpine
+FROM deps:17.1.0-alpine
 
 ENV NODE_ENV=production
 

@@ -1,20 +1,20 @@
 # ===== BASE STAGE =====
 
-FROM node:17 as base
+FROM node:17 as deps
 
 WORKDIR /app/admin
 
 COPY package*.json ./
 
+RUN npm install
+
 COPY . .
 
 # ===== DEVELOPMENT STAGE =====
 
-FROM base as dev
+FROM deps as dev
 
 ENV NODE_ENV=development
-
-RUN npm install
 
 EXPOSE 7000
 
@@ -22,7 +22,7 @@ CMD [ "gatsby", "develop", "-H", "0.0.0.0",  "-p", "7000" ]
 
 # ===== BUILDER STAGE =====
 
-FROM base as builder
+FROM deps as builder
 
 ENV NODE_ENV=production
 
