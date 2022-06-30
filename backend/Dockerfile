@@ -30,6 +30,8 @@ RUN npm run build
 
 FROM node:17.1.0-alpine
 
+COPY package*.json .
+
 ENV NODE_ENV=production
 
 COPY --from=builder /app/medusa/dist ./dist

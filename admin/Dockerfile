@@ -30,7 +30,6 @@ RUN npm run build
 
 RUN npm install --production
 
-
 # ===== NGINX STAGE =====
 
 FROM nginx:alpine
