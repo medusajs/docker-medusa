@@ -1,21 +1,33 @@
-FROM node:latest
+# ===== BASE STAGE =====
+
+FROM node:17 as base
 
 WORKDIR /app/admin
 
+COPY package*.json ./
+
 COPY . .
 
-RUN rm -rf node_modules
+# ===== DEVELOPMENT STAGE =====
 
-RUN apt-get update
+FROM base as dev
 
-RUN npm install -g npm@latest
+ENV NODE_ENV=development
 
-RUN npm install sharp
-
-RUN npm install -g gatsby-cli
-
-RUN npm install --loglevel=error
-
-RUN npm run build &> /dev/null
+RUN npm install
 
 CMD [ "gatsby", "develop", "-H", "0.0.0.0",  "-p", "7000" ]
+
+# ===== BUILDER STAGE =====
+
+FROM base as builder
+
+ENV NODE_ENV=production
+
+RUN npm install --production
+
+# ===== NGINX STAGE =====
+
+FROM nginx:alpine
+
+COPY --from=builder /app/admin/public /usr/share/nginx/html
