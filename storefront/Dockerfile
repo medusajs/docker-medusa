@@ -1,19 +1,38 @@
-FROM node:latest
+# ===== BASE STAGE =====
 
-WORKDIR /app/storefront
+FROM node:17 as deps
+
+WORKDIR /app/admin
+
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
-RUN rm -rf node_modules
+# ===== DEVELOPMENT STAGE =====
 
-RUN apt-get update
+FROM deps as dev
 
-RUN npm install -g npm@latest
+ENV NODE_ENV=development
 
-RUN npm install -g gatsby-cli
+EXPOSE 7000
 
-RUN npm install sharp
+CMD [ "gatsby", "develop", "-H", "0.0.0.0",  "-p", "7000" ]
 
-RUN npm install --loglevel=error
+# ===== BUILDER STAGE =====
 
-ENTRYPOINT ["gatsby", "develop", "-H", "0.0.0.0", "-p", "8000" ]
+FROM deps as builder
+
+ENV NODE_ENV=production
+
+RUN npm run build
+
+RUN npm install --production
+
+
+# ===== NGINX STAGE =====
+
+FROM nginx:alpine
+
+COPY --from=builder /app/admin/public /usr/share/nginx/html

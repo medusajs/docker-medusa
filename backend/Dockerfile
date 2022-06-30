@@ -1,19 +1,43 @@
-FROM node:17.1.0
+FROM node:17.1.0 as deps
 
 WORKDIR /app/medusa
 
-COPY package.json .
-
-RUN apt-get update
-
-RUN apt-get install -y python
-
-RUN npm install -g npm@latest
+COPY package*.json .
 
 RUN npm install -g @medusajs/medusa-cli@latest
 
-RUN npm install --loglevel=error
-
 COPY . .
 
+RUN npm install
+
+# ===== DEVELOPMENT STAGE =====
+
+FROM deps as dev
+
+ENV NODE_ENV=development
+
 ENTRYPOINT ["./develop.sh", "develop"]
+
+# ===== PRODUCTION BUILDER STAGE =====
+
+FROM deps as builder
+
+ENV NODE_ENV=production
+
+RUN npm run build
+
+# ===== PRODUCTION RUNNER STAGE =====
+
+FROM node:17.1.0-alpine
+
+COPY package*.json .
+
+ENV NODE_ENV=production
+
+COPY --from=builder /app/medusa/dist ./dist
+
+RUN npm install --production
+
+EXPOSE 9000
+
+CMD [ "npm", "run", "start" ]

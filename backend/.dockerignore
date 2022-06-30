@@ -1,0 +1,8 @@
+
+# DIRS
+
+data/
+dist/
+node_modules/
+
+*.sql
