@@ -3,24 +3,40 @@ services:
   backend:
     build:
       dockerfile: Dockerfile
-      target: prod
+      target: dev
       context: ./backend
-    image: backend:latest
     container_name: medusa-server
-    restart: always
     depends_on:
       - postgres
       - redis
     environment:
+      NODE_ENV: development
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
-      NODE_ENV: production
       STORE_CORS: http://localhost
       REDIS_URL: redis://cache
       JWT_SECRET: some_jwt_secret
       COOKIE_SECRET: some_cookie_secret
       PORT: 9000
+    volumes:
+      - ./backend:/app/medusa
+      - backend_node_modules:/app/medusa/node_modules
     ports:
       - "9000:9000"
+
+  admin:
+    build:
+      context: ./admin
+      target: dev
+      dockerfile: Dockerfile
+    image: admin:latest
+    restart: always
+    depends_on:
+      - backend
+    container_name: medusa-admin
+    environment:
+      NODE_OPTIONS: --openssl-legacy-provider
+    ports:
+      - "7000:7000"
 
   postgres:
     restart: always
@@ -37,27 +53,20 @@ services:
     expose:
       - 6379
 
-  admin:
-    build:
-      context: ./admin
-      dockerfile: Dockerfile
-    image: admin:latest
-    restart: always
-    depends_on:
-      - backend
-    container_name: medusa-admin
-    environment:
-      NODE_OPTIONS: --openssl-legacy-provider
-    ports:
-      - "7000:7000"
-
   storefront:
     build:
       dockerfile: Dockerfile
-    image: storefront:latest
+      target: dev
+      context: ./storefront
     container_name: medusa-storefront
     restart: always
     depends_on:
       - backend
+      - ./storefront:/app/storefront
+      - storefront_node_modules:/app/storefront/node_modules
     ports:
-      - "80:80"
+      - "8000:8000"
+
+volumes:
+  storefront_node_modules:
+  backend_node_modules:
