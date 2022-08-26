@@ -39,6 +39,7 @@ services:
       - "7000:7000"
 
   postgres:
+    image: postgres:10.4
     restart: always
     ports:
       - "5432:5432"
