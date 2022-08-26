@@ -14,6 +14,7 @@ services:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
       STORE_CORS: http://localhost
       REDIS_URL: redis://cache
+      CHOKIDAR_USEPOLLING: true
       JWT_SECRET: some_jwt_secret
       COOKIE_SECRET: some_cookie_secret
       PORT: 9000
