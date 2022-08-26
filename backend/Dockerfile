@@ -2,7 +2,7 @@ FROM node:17.1.0 as deps
 
 WORKDIR /app/medusa
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install -g @medusajs/medusa-cli@latest
 
@@ -30,7 +30,7 @@ RUN npm run build
 
 FROM node:17.1.0-alpine
 
-COPY package*.json .
+COPY package*.json ./
 
 ENV NODE_ENV=production
 
