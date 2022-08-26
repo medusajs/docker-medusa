@@ -35,6 +35,6 @@ RUN npm install --production
 
 # ===== NGINX STAGE =====
 
-FROM nginx:alpine
+FROM nginx:alpine as prod
 
 COPY --from=builder /app/admin/public /usr/share/nginx/html

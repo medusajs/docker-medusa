@@ -42,6 +42,7 @@ services:
     build:
       context: ./admin
       dockerfile: Dockerfile
+      target: prod
     image: admin:latest
     restart: always
     depends_on:
@@ -54,6 +55,8 @@ services:
 
   storefront:
     build:
+      target: prod
+      context: ./storefront
       dockerfile: Dockerfile
     image: storefront:latest
     container_name: medusa-storefront
