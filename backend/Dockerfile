@@ -38,6 +38,8 @@ COPY --from=builder /app/medusa/dist ./dist
 
 RUN npm install --production
 
+RUN npm install -g @medusajs/medusa-cli@latest
+
 EXPOSE 9000
 
 CMD [ "medusa", "start" ]
