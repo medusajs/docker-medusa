@@ -28,7 +28,7 @@ RUN npm run build
 
 # ===== PRODUCTION RUNNER STAGE =====
 
-FROM node:17.1.0-alpine
+FROM node:17.1.0-alpine as prod
 
 COPY package*.json ./
 
