@@ -1,19 +1,19 @@
-FROM node:latest
+#Dependencies
+FROM node:18-alpine3.16 as deps
+WORKDIR /app/storefront/
+#   Copy storefront package package.json and yarn.lock from /storefront
+COPY ./package.json .
+COPY ./yarn.lock .
+#   Install deps
+RUN yarn install --frozen-lockfile
 
-WORKDIR /app/storefront
+#Build
+FROM node:18-alpine3.16 as runner
+WORKDIR /app/storefront/
+#   Copy cached node_modules from deps
+COPY --from=deps /app/storefront/node_modules /app/storefront/node_modules
+#   Copy app source code and monorepo root package.json
+COPY ./storefront /app/storefront
 
-COPY . .
-
-RUN rm -rf node_modules
-
-RUN apt-get update
-
-RUN npm install -g npm@latest
-
-RUN npm install -g gatsby-cli
-
-RUN npm install sharp
-
-RUN npm install --loglevel=error
-
-ENTRYPOINT ["gatsby", "develop", "-H", "0.0.0.0", "-p", "8000" ]
+#   Run the storefront in dev mode
+ENTRYPOINT [ "yarn", "dev" ]

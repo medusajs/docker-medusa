@@ -1,25 +1,20 @@
-FROM node:17.1.0 as builder
+#Dependencies
+FROM node:18-alpine3.16 as deps
+WORKDIR /app/storefront/
+#   Copy storefront package.json and yarn.lock from /storefront
+COPY ./storefront/package.json .
+COPY ./storefront/yarn.lock .
+#   Install deps and launch patch-package
+RUN yarn install --frozen-lockfile
 
-WORKDIR /app/storefront
-
-COPY . . 
-
-RUN rm -rf node_modules
-
-RUN apt-get update
-
-RUN yarn global add gatsby-cli
-
-RUN yarn add sharp
-
-RUN yarn install
-
-RUN gatsby build
-
-FROM nginx
-
-EXPOSE 80
-
-COPY --from=builder /app/storefront/public /usr/share/nginx/html
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+#Build
+FROM node:18-alpine3.16 as builder
+WORKDIR /app/storefront/
+#   Copy cached root and package node_modules from deps
+COPY --from=deps /app/storefront/node_modules /app/storefront/node_modules
+#   Copy app source code and monorepo root package.json
+COPY ./storefront /app/storefront/
+#   Build the app
+RUN yarn build
+#   Run the builded app
+ENTRYPOINT [ "yarn", "start" ]
